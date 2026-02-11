@@ -13,13 +13,11 @@ function getComputerChoice() {
 function getHumanChoice() {
     const validInputs = ["rock", "paper", "scissors"]
     let input = prompt("Pick one of [rock/paper/scissors]");
-    return !(validInputs.includes(input)) ? new ReferenceError("Invalid input") : input;
+    return (!(validInputs.includes(input)) ? 
+        new ReferenceError("Invalid input") : input
+    );
 }
 
-let computerScore = 0;
-let humanScore = 0;
-
-let scoreArray = [computerScore, humanScore];
 
 function judgeRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
@@ -54,16 +52,40 @@ function judgeRound(humanChoice, computerChoice) {
     }   
 }
 
-function playRound(humanChoice, computerChoice) {
-    roundScore = judgeRound(humanChoice, computerChoice);
-    scoreArray[0] = scoreArray[0] + roundScore[0];
-    scoreArray[1] = scoreArray[1] + roundScore[1];
+
+
+function playGame() {
+    function playRound(humanChoice, computerChoice) {
+
+        roundScore = judgeRound(humanChoice, computerChoice);
+        scoreArray[0] = scoreArray[0] + roundScore[0];
+        scoreArray[1] = scoreArray[1] + roundScore[1];
+    }
+    let computerScore = 0;
+    let humanScore = 0;
+
+    let scoreArray = [computerScore, humanScore];
+
+    for (i = 0; i < 5; i++) {
+        let humanChoice = getHumanChoice();
+        let computerChoice = getComputerChoice();
+        playRound(humanChoice, computerChoice);
+    }
+    console.log("The final score is Computer: " + scoreArray[0] + 
+        ", Human: " + scoreArray[1] + ".")
+    if (scoreArray[0] > scoreArray[1]) {
+        console.log("Computer wins");
+    } else {
+        console.log("You win!");
+    }
 }
 
-playRound("rock", "paper");
-playRound("paper", "rock");
-playRound("scissors", "rock");
-playRound("rock", "scissors");
-playRound("paper", "paper");
-playRound("rock", "rock");
-playRound("scissors", "scissors")
+// playRound("rock", "paper");
+// playRound("paper", "rock");
+// playRound("scissors", "rock");
+// playRound("rock", "scissors");
+// playRound("paper", "paper");
+// playRound("rock", "rock");
+// playRound("scissors", "scissors")
+
+playGame();
